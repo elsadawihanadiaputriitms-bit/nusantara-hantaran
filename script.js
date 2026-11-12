@@ -1,0 +1,92 @@
+// PENGATURAN USAHA: ganti nomor dan alamat di bawah sebelum website dipublikasikan.
+const BUSINESS_WHATSAPP = "6285268205243"; // Format internasional, tanpa +, spasi, atau angka 0 di depan.
+const BUSINESS_ADDRESS = "Dusun VII Sungai Krambil Desa Lubuk Rumbai Kecamatan Tuah Negeri Kabupaten Musi Rawas";
+
+const products = [
+  {name:"Hantaran Rustic Elegance",category:"Lamaran",price:"Mulai Rp350.000",description:"Nuansa natural dengan detail pita dan bunga lembut.",image:"https://i0.wp.com/einvite.id/wp-content/uploads/seserahan-modern.jpg"},
+  {name:"Seserahan Classic Gold",category:"Pernikahan",price:"Mulai Rp650.000",description:"Tampilan anggun dengan sentuhan warna emas.",image:"https://static.wixstatic.com/media/c328a8_d7393fa472f648948e5fbe7466d3a9fe~mv2.jpeg/v1/fill/w_1000%2Ch_759%2Cal_c%2Cq_85%2Cusm_0.66_1.00_0.01/c328a8_d7393fa472f648948e5fbe7466d3a9fe~mv2.jpeg"},
+  {name:"Hantaran Floral",category:"Lamaran",price:"Mulai Rp400.000",description:"Dekorasi floral manis untuk hari penuh makna.",image:"https://sribulink.com/storage/uploads/blog/2025/09/tradisi-unik-seserahan-di-berbagai-daerah-indonesia-yang-jarang-dibahas-l.webp"},
+  {name:"Gift Box Celebration",category:"Hadiah",price:"Mulai Rp175.000",description:"Kotak hadiah personal untuk orang tersayang.",image:"https://www.tangerangnews.com/assets/uploaded/photo/2023/08/12/87974b148a7dbb8d2eab116d54d7997d.jpg"},
+  {name:"Hantaran Wisuda",category:"Wisuda",price:"Mulai Rp150.000",description:"Pilihan hadiah cantik untuk merayakan kelulusan.",image:"https://i.pinimg.com/736x/db/1a/21/db1a21005571a723057b7d2d32f26b0e.jpg"},
+  {name:"Custom Tray Set",category:"Pernikahan",price:"Konsultasi harga",description:"Desain dan isi dapat disesuaikan dengan tema acara.",image:"https://i.pinimg.com/originals/86/65/a7/8665a79a40d52241f2d3769ddc9103f4.jpg"}
+];
+
+const waNumber = BUSINESS_WHATSAPP;
+const isConfigured = /^62\d{8,15}$/.test(waNumber);
+const waLink = (message) => `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+const waDisplay = document.getElementById("waDisplay");
+const addressDisplay = document.getElementById("addressDisplay");
+waDisplay.textContent = isConfigured ? `+${waNumber}` : "6285268205243";
+addressDisplay.textContent = BUSINESS_ADDRESS;
+const defaultMessage = "Halo Nusantara Hantaran, saya ingin bertanya tentang layanan hantaran.";
+["contactWhatsApp","floatingWhatsApp"].forEach(id => {
+  const el = document.getElementById(id);
+  el.href = isConfigured ? waLink(defaultMessage) : "#kontak";
+  if (!isConfigured) el.addEventListener("click", e => { e.preventDefault(); alert("Silakan atur nomor WhatsApp usaha pada file script.js terlebih dahulu."); });
+});
+
+const productGrid = document.getElementById("productGrid");
+function renderProducts(filter="Semua"){
+  const list = products.filter(p => filter === "Semua" || p.category === filter);
+  productGrid.innerHTML = list.map((p) => `
+    <article class="product-card">
+      <img src="${p.image}" alt="${p.name}" loading="lazy">
+      <div class="product-info"><span class="product-category">${p.category}</span><h3>${p.name}</h3><p>${p.description}</p>
+      <div class="product-bottom"><span class="product-price">${p.price}</span><button class="small-order" data-product="${p.name}">Tanya produk ↗</button></div></div>
+    </article>`).join("");
+  productGrid.querySelectorAll("[data-product]").forEach(btn => btn.addEventListener("click", () => {
+    const msg = `Halo Nusantara Hantaran, saya tertarik dengan ${btn.dataset.product}. Mohon informasi detail dan harganya.`;
+    if (isConfigured) window.open(waLink(msg), "_blank"); else alert("Atur nomor WhatsApp pada file script.js terlebih dahulu.");
+  }));
+}
+renderProducts();
+document.getElementById("filters").addEventListener("click", e => {
+  const btn = e.target.closest("[data-filter]"); if(!btn) return;
+  document.querySelectorAll(".filter").forEach(b => b.classList.toggle("active", b===btn));
+  renderProducts(btn.dataset.filter);
+});
+
+document.getElementById("menuToggle").addEventListener("click", () => document.getElementById("navMenu").classList.toggle("open"));
+document.querySelectorAll("#navMenu a").forEach(a => a.addEventListener("click", () => document.getElementById("navMenu").classList.remove("open")));
+document.getElementById("year").textContent = new Date().getFullYear();
+
+let selectedRating = 5;
+const starButtons = [...document.querySelectorAll("#starPicker button")];
+function paintStars(){starButtons.forEach(b => b.classList.toggle("selected", Number(b.dataset.star)<=selectedRating));}
+paintStars();
+starButtons.forEach(b => b.addEventListener("click", () => {selectedRating=Number(b.dataset.star);paintStars();}));
+const STORAGE_KEY = "nusantaraHantaranReviews";
+function getReviews(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]")}catch{return []}}
+function renderReviews(){
+  const reviews=getReviews();
+  document.getElementById("reviewCount").textContent=`${reviews.length} ulasan`;
+  document.getElementById("reviewList").innerHTML=reviews.slice().reverse().map(r=>`
+    <article class="review-item"><strong>${escapeHTML(r.name)}</strong><div class="review-stars">${"★".repeat(r.rating)}${"☆".repeat(5-r.rating)}</div><p>${escapeHTML(r.text)}</p></article>`).join("");
+}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+renderReviews();
+document.getElementById("reviewForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=document.getElementById("reviewName").value.trim();
+  const review=document.getElementById("reviewText").value.trim();
+  if(!name||!review)return;
+  const reviews=getReviews();reviews.push({name,text:review,rating:selectedRating,date:new Date().toISOString()});
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(reviews));
+  e.target.reset();selectedRating=5;paintStars();renderReviews();
+  document.getElementById("reviewMessage").textContent="Terima kasih! Ulasan Anda berhasil ditambahkan pada perangkat ini.";
+});
+
+document.getElementById("orderForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  if(!isConfigured){alert("Nomor WhatsApp belum diatur. Buka script.js dan ganti BUSINESS_WHATSAPP dengan nomor usaha.");return;}
+  const val=id=>document.getElementById(id).value.trim();
+  const message=[
+    "Halo Nusantara Hantaran, saya ingin konsultasi/pemesanan.",
+    `Nama: ${val("customerName")}`,
+    `Nomor kontak: ${val("customerPhone")}`,
+    `Jenis hantaran: ${val("eventType")}`,
+    `Tanggal acara: ${val("eventDate")||"-"}`,
+    `Detail pesanan: ${val("orderNotes")||"-"}`
+  ].join("\n");
+  window.open(waLink(message),"_blank");
+});
