@@ -1,136 +1,330 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Nusantara Hantaran - hantaran dan seserahan cantik untuk momen istimewa Anda.">
-  <title>Nusantara Hantaran | Hantaran untuk Momen Istimewa</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="announcement">Merangkai cerita indah di setiap hantaran ✦ Konsultasi pesanan melalui WhatsApp</div>
-  <header class="site-header">
-    <a class="brand" href="#home" aria-label="Nusantara Hantaran">
-      <span class="brand-mark">NH</span>
-      <span><strong>NUSANTARA</strong><small>HANTARAN</small></span>
-    </a>
-    <button class="menu-toggle" id="menuToggle" aria-label="Buka navigasi">☰</button>
-    <nav id="navMenu">
-      <a href="#home">Beranda</a><a href="#layanan">Layanan</a><a href="#koleksi">Koleksi</a>
-      <a href="#tentang">Tentang Kami</a><a href="#ulasan">Ulasan</a><a class="nav-cta" href="#kontak">Hubungi Kami</a>
-    </nav>
-  </header>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="hero-shade"></div>
-      <div class="hero-content">
-        <p class="eyebrow light">DETAIL KECIL, KENANGAN BESAR</p>
-        <h1>Hantaran istimewa<br><em>untuk momen bermakna.</em></h1>
-        <p class="hero-copy">Kami membantu menyiapkan hantaran dan seserahan yang cantik, rapi, dan berkesan untuk hari spesial Anda.</p>
-        <div class="hero-actions"><a class="button button-gold" href="#koleksi">Jelajahi Koleksi</a><a class="button button-outline" href="#kontak">Konsultasi Pesanan</a></div>
-      </div>
-      <div class="hero-note"><span>01</span> Crafted with care · Made for your moments</div>
-    </section>
+// ==========================================
+// PENGATURAN USAHA NUSANTARA HANTARAN
+// ==========================================
 
-    <section class="intro section-wrap" id="tentang">
-      <div class="intro-image">
-        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85" alt="Dekorasi acara pernikahan elegan">
-        <div class="image-stamp">Nusantara<br><b>Hantaran</b></div>
-      </div>
-      <div class="intro-text">
-        <p class="eyebrow">SELAMAT DATANG</p>
-        <h2>Lebih dari sekadar hantaran, sebuah ungkapan perhatian.</h2>
-        <p>Nusantara Hantaran hadir untuk membantu Anda mempersiapkan hantaran di berbagai momen berharga. Setiap rangkaian ditata dengan teliti, mengutamakan keindahan, kerapian, dan sentuhan personal.</p>
-        <p>Mulai dari lamaran, pernikahan, wisuda, hingga hadiah spesial, kami siap membantu mewujudkan hantaran sesuai kebutuhan dan anggaran Anda.</p>
-        <a class="text-link" href="#layanan">Kenali layanan kami <span>↗</span></a>
-      </div>
-    </section>
+const BUSINESS_WHATSAPP = "6285269205243";
+const BUSINESS_ADDRESS = "Dusun VII Sungai Krambil Desa Lubuk Rumbai Kecamatan Tuah Negeri Kabupaten Musi Rawas";
 
-    <section class="services section-tint" id="layanan">
-      <div class="section-heading">
-        <p class="eyebrow">APA YANG KAMI TAWARKAN</p><h2>Layanan Nusantara Hantaran</h2>
-        <p>Temukan layanan yang sesuai dengan momen spesial Anda.</p>
-      </div>
-      <div class="service-grid">
-        <article class="service-card"><div class="service-icon">♡</div><h3>Hantaran Lamaran</h3><p>Rangkaian hantaran manis untuk mengawali langkah menuju hari bahagia.</p></article>
-        <article class="service-card"><div class="service-icon">✧</div><h3>Seserahan Pernikahan</h3><p>Penataan seserahan elegan dengan detail yang rapi dan berkesan.</p></article>
-        <article class="service-card"><div class="service-icon">✿</div><h3>Hantaran Wisuda</h3><p>Hadiah dan hantaran cantik untuk merayakan pencapaian istimewa.</p></article>
-        <article class="service-card"><div class="service-icon">❀</div><h3>Hantaran Custom</h3><p>Desain dapat disesuaikan dengan tema, warna, isi, dan anggaran Anda.</p></article>
-      </div>
-    </section>
+const products = [
+  {
+    name: "Hantaran Rustic Elegance",
+    category: "Lamaran",
+    price: "Mulai Rp350.000",
+    description: "Nuansa natural dengan detail pita dan bunga lembut.",
+    image: "https://i0.wp.com/einvite.id/wp-content/uploads/seserahan-modern.jpg"
+  },
+  {
+    name: "Seserahan Classic Gold",
+    category: "Pernikahan",
+    price: "Mulai Rp650.000",
+    description: "Tampilan anggun dengan sentuhan warna emas.",
+    image: "https://static.wixstatic.com/media/c328a8_d7393fa472f648948e5fbe7466d3a9fe~mv2.jpeg/v1/fill/w_1000%2Ch_759%2Cal_c%2Cq_85%2Cusm_0.66_1.00_0.01/c328a8_d7393fa472f648948e5fbe7466d3a9fe~mv2.jpeg"
+  },
+  {
+    name: "Hantaran Floral",
+    category: "Lamaran",
+    price: "Mulai Rp400.000",
+    description: "Dekorasi floral manis untuk hari penuh makna.",
+    image: "https://sribulink.com/storage/uploads/blog/2025/09/tradisi-unik-seserahan-di-berbagai-daerah-indonesia-yang-jarang-dibahas-l.webp"
+  },
+  {
+    name: "Gift Box Celebration",
+    category: "Hadiah",
+    price: "Mulai Rp175.000",
+    description: "Kotak hadiah personal untuk orang tersayang.",
+    image: "https://www.tangerangnews.com/assets/uploaded/photo/2023/08/12/87974b148a7dbb8d2eab116d54d7997d.jpg"
+  },
+  {
+    name: "Hantaran Wisuda",
+    category: "Wisuda",
+    price: "Mulai Rp150.000",
+    description: "Pilihan hadiah cantik untuk merayakan kelulusan.",
+    image: "https://i.pinimg.com/736x/db/1a/21/db1a21005571a723057b7d2d32f26b0e.jpg"
+  },
+  {
+    name: "Custom Tray Set",
+    category: "Pernikahan",
+    price: "Konsultasi harga",
+    description: "Desain dan isi dapat disesuaikan dengan tema acara.",
+    image: "https://i.pinimg.com/originals/86/65/a7/8665a79a40d52241f2d3769ddc9103f4.jpg"
+  }
+];
 
-    <section class="collection section-wrap" id="koleksi">
-      <div class="section-heading heading-row">
-        <div><p class="eyebrow">INSPIRASI HANTARAN</p><h2>Koleksi pilihan</h2><p>Contoh inspirasi yang dapat disesuaikan dengan permintaan Anda.</p></div>
-        <a class="text-link" href="#kontak">Pesan custom <span>↗</span></a>
-      </div>
-      <div class="filters" id="filters">
-        <button class="filter active" data-filter="Semua">Semua</button>
-        <button class="filter" data-filter="Lamaran">Lamaran</button>
-        <button class="filter" data-filter="Pernikahan">Pernikahan</button>
-        <button class="filter" data-filter="Wisuda">Wisuda</button>
-        <button class="filter" data-filter="Hadiah">Hadiah</button>
-      </div>
-      <div class="product-grid" id="productGrid"></div>
-      <p class="price-note">*Foto dan harga di atas merupakan contoh katalog. Harga akhir menyesuaikan isi, ukuran, bahan, dan tingkat dekorasi.</p>
-    </section>
+// ==========================================
+// KONFIGURASI WHATSAPP
+// ==========================================
 
-    <section class="process">
-      <div class="process-inner">
-        <p class="eyebrow light">MUDAH DAN PRAKTIS</p><h2>Wujudkan hantaran impian Anda.</h2>
-        <div class="steps">
-          <div><span>01</span><h3>Konsultasi</h3><p>Ceritakan kebutuhan, tema, dan anggaran Anda.</p></div>
-          <div><span>02</span><h3>Pilih desain</h3><p>Tentukan konsep dan detail hantaran bersama kami.</p></div>
-          <div><span>03</span><h3>Konfirmasi</h3><p>Setujui rincian pesanan dan jadwal pengerjaan.</p></div>
-          <div><span>04</span><h3>Hantaran siap</h3><p>Pesanan disiapkan untuk momen istimewa Anda.</p></div>
+const waNumber = BUSINESS_WHATSAPP;
+const isConfigured = /^62\d{8,15}$/.test(waNumber);
+
+const waLink = (message) =>
+  `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+
+const waDisplay = document.getElementById("waDisplay");
+const addressDisplay = document.getElementById("addressDisplay");
+
+if (waDisplay) {
+  waDisplay.textContent = isConfigured
+    ? `+${waNumber}`
+    : BUSINESS_WHATSAPP;
+}
+
+if (addressDisplay) {
+  addressDisplay.textContent = BUSINESS_ADDRESS;
+}
+
+const defaultMessage =
+  "Halo Nusantara Hantaran, saya ingin bertanya tentang layanan hantaran.";
+
+["contactWhatsApp", "floatingWhatsApp"].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  el.href = isConfigured ? waLink(defaultMessage) : "#kontak";
+
+  if (!isConfigured) {
+    el.addEventListener("click", e => {
+      e.preventDefault();
+      alert("Silakan atur nomor WhatsApp usaha pada file script.js terlebih dahulu.");
+    });
+  }
+});
+
+// ==========================================
+// MENAMPILKAN PRODUK
+// ==========================================
+
+const productGrid = document.getElementById("productGrid");
+
+function renderProducts(filter = "Semua") {
+  if (!productGrid) return;
+
+  const list = products.filter(p =>
+    filter === "Semua" || p.category === filter
+  );
+
+  productGrid.innerHTML = list.map(p => `
+    <article class="product-card">
+      <img src="${p.image}" alt="${p.name}" loading="lazy">
+      <div class="product-info">
+        <span class="product-category">${p.category}</span>
+        <h3>${p.name}</h3>
+        <p>${p.description}</p>
+        <div class="product-bottom">
+          <span class="product-price">${p.price}</span>
+          <button class="small-order" data-product="${p.name}">
+            Tanya produk ↗
+          </button>
         </div>
       </div>
-    </section>
+    </article>
+  `).join("");
 
-    <section class="reviews section-wrap" id="ulasan">
-      <div class="section-heading"><p class="eyebrow">CERITA PELANGGAN</p><h2>Ulasan pelanggan</h2><p>Bagikan pengalaman Anda bersama Nusantara Hantaran.</p></div>
-      <div class="review-layout">
-        <div class="review-summary"><div class="big-star">★</div><h3 id="reviewCount">0 ulasan</h3><p>Terima kasih telah mempercayakan momen spesial Anda kepada kami.</p><small>Ulasan yang dikirim tersimpan di browser perangkat ini.</small></div>
-        <form class="review-form" id="reviewForm">
-          <h3>Tulis ulasan</h3>
-          <label for="reviewName">Nama</label><input id="reviewName" required maxlength="45" placeholder="Nama Anda">
-          <label>Rating</label><div class="stars" id="starPicker" role="radiogroup" aria-label="Pilih rating">
-            <button type="button" data-star="1" aria-label="1 bintang">★</button><button type="button" data-star="2" aria-label="2 bintang">★</button><button type="button" data-star="3" aria-label="3 bintang">★</button><button type="button" data-star="4" aria-label="4 bintang">★</button><button type="button" data-star="5" aria-label="5 bintang">★</button>
-          </div>
-          <label for="reviewText">Ulasan</label><textarea id="reviewText" required maxlength="500" rows="4" placeholder="Ceritakan pengalaman Anda..."></textarea>
-          <button class="button button-dark" type="submit">Kirim Ulasan</button>
-          <p class="form-message" id="reviewMessage" aria-live="polite"></p>
-        </form>
-      </div>
-      <div class="review-list" id="reviewList"></div>
-    </section>
+  productGrid.querySelectorAll("[data-product]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const msg = `Halo Nusantara Hantaran, saya tertarik dengan ${btn.dataset.product}. Mohon informasi detail dan harganya.`;
 
-    <section class="contact section-tint" id="kontak">
-      <div class="contact-copy"><p class="eyebrow">MARI BICARAKAN RENCANA ANDA</p><h2>Hantaran yang berkesan dimulai dari percakapan.</h2><p>Hubungi kami untuk konsultasi desain, pilihan paket, harga, dan jadwal pemesanan.</p>
-        <div class="contact-detail"><span>WHATSAPP</span><strong id="waDisplay">Nomor WhatsApp belum diatur</strong></div>
-        <div class="contact-detail"><span>LOKASI</span><strong id="addressDisplay">Alamat usaha dapat ditambahkan di sini</strong></div>
-        <a class="button button-gold" id="contactWhatsApp" href="#" target="_blank" rel="noopener">Chat WhatsApp ↗</a>
-      </div>
-      <form class="order-form" id="orderForm">
-        <h3>Formulir konsultasi</h3>
-        <p>Isi detail singkat, lalu lanjutkan pengiriman melalui WhatsApp.</p>
-        <label for="customerName">Nama lengkap</label><input id="customerName" required placeholder="Nama Anda">
-        <label for="customerPhone">Nomor yang bisa dihubungi</label><input id="customerPhone" required inputmode="tel" placeholder="08xxxxxxxxxx">
-        <label for="eventType">Jenis hantaran</label><select id="eventType" required><option value="">Pilih jenis hantaran</option><option>Hantaran lamaran</option><option>Seserahan pernikahan</option><option>Hantaran wisuda</option><option>Hantaran hadiah</option><option>Custom</option></select>
-        <label for="eventDate">Tanggal acara / dibutuhkan</label><input id="eventDate" type="date">
-        <label for="orderNotes">Detail pesanan</label><textarea id="orderNotes" rows="3" placeholder="Tema, warna, isi hantaran, anggaran, dan lainnya"></textarea>
-        <button class="button button-dark" type="submit">Kirim permintaan via WhatsApp</button>
-        <p class="form-message" id="orderMessage">Formulir akan membuka WhatsApp dengan detail pesanan Anda.</p>
-      </form>
-    </section>
-  </main>
+      if (isConfigured) {
+        window.open(waLink(msg), "_blank");
+      } else {
+        alert("Atur nomor WhatsApp pada file script.js terlebih dahulu.");
+      }
+    });
+  });
+}
 
-  <footer><a class="brand footer-brand" href="#home"><span class="brand-mark">NH</span><span><strong>NUSANTARA</strong><small>HANTARAN</small></span></a><p>Merangkai keindahan untuk setiap cerita.</p><small>© <span id="year"></span> Nusantara Hantaran. All rights reserved.</small></footer>
-  <a class="floating-wa" id="floatingWhatsApp" href="#" target="_blank" rel="noopener" aria-label="Hubungi melalui WhatsApp">☏</a>
-  <script src="script.js"></script>
-</body>
-</html>
+renderProducts();
+
+// ==========================================
+// FILTER PRODUK
+// ==========================================
+
+const filters = document.getElementById("filters");
+
+if (filters) {
+  filters.addEventListener("click", e => {
+    const btn = e.target.closest("[data-filter]");
+    if (!btn) return;
+
+    document.querySelectorAll(".filter").forEach(b => {
+      b.classList.toggle("active", b === btn);
+    });
+
+    renderProducts(btn.dataset.filter);
+  });
+}
+
+// ==========================================
+// MENU NAVIGASI
+// ==========================================
+
+const menuToggle = document.getElementById("menuToggle");
+const navMenu = document.getElementById("navMenu");
+
+if (menuToggle && navMenu) {
+  menuToggle.addEventListener("click", () => {
+    navMenu.classList.toggle("open");
+  });
+
+  document.querySelectorAll("#navMenu a").forEach(a => {
+    a.addEventListener("click", () => {
+      navMenu.classList.remove("open");
+    });
+  });
+}
+
+// ==========================================
+// TAHUN OTOMATIS
+// ==========================================
+
+const yearElement = document.getElementById("year");
+
+if (yearElement) {
+  yearElement.textContent = new Date().getFullYear();
+}
+
+// ==========================================
+// SISTEM ULASAN PELANGGAN
+// ==========================================
+
+let selectedRating = 5;
+
+const starButtons = [
+  ...document.querySelectorAll("#starPicker button")
+];
+
+function paintStars() {
+  starButtons.forEach(b => {
+    b.classList.toggle(
+      "selected",
+      Number(b.dataset.star) <= selectedRating
+    );
+  });
+}
+
+paintStars();
+
+starButtons.forEach(b => {
+  b.addEventListener("click", () => {
+    selectedRating = Number(b.dataset.star);
+    paintStars();
+  });
+});
+
+const STORAGE_KEY = "nusantaraHantaranReviews";
+
+function getReviews() {
+  try {
+    return JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || "[]"
+    );
+  } catch {
+    return [];
+  }
+}
+
+function escapeHTML(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[c]));
+}
+
+function renderReviews() {
+  const reviews = getReviews();
+
+  const reviewCount = document.getElementById("reviewCount");
+  const reviewList = document.getElementById("reviewList");
+
+  if (reviewCount) {
+    reviewCount.textContent = `${reviews.length} ulasan`;
+  }
+
+  if (reviewList) {
+    reviewList.innerHTML = reviews.slice().reverse().map(r => `
+      <article class="review-item">
+        <strong>${escapeHTML(r.name)}</strong>
+        <div class="review-stars">
+          ${"★".repeat(r.rating)}${"☆".repeat(5-r.rating)}
+        </div>
+        <p>${escapeHTML(r.text)}</p>
+      </article>
+    `).join("");
+  }
+}
+
+renderReviews();
+
+const reviewForm = document.getElementById("reviewForm");
+
+if (reviewForm) {
+  reviewForm.addEventListener("submit", e => {
+    e.preventDefault();
+
+    const name = document.getElementById("reviewName").value.trim();
+    const review = document.getElementById("reviewText").value.trim();
+
+    if (!name || !review) return;
+
+    const reviews = getReviews();
+
+    reviews.push({
+      name,
+      text: review,
+      rating: selectedRating,
+      date: new Date().toISOString()
+    });
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(reviews)
+    );
+
+    e.target.reset();
+    selectedRating = 5;
+    paintStars();
+    renderReviews();
+
+    const reviewMessage = document.getElementById("reviewMessage");
+
+    if (reviewMessage) {
+      reviewMessage.textContent =
+        "Terima kasih! Ulasan Anda berhasil ditambahkan pada perangkat ini.";
+    }
+  });
+}
+
+// ==========================================
+// FORMULIR PEMESANAN WHATSAPP
+// ==========================================
+
+const orderForm = document.getElementById("orderForm");
+
+if (orderForm) {
+  orderForm.addEventListener("submit", e => {
+    e.preventDefault();
+
+    if (!isConfigured) {
+      alert("Nomor WhatsApp belum diatur. Buka script.js dan ganti BUSINESS_WHATSAPP dengan nomor usaha.");
+      return;
+    }
+
+    const val = id =>
+      document.getElementById(id).value.trim();
+
+    const message = [
+      "Halo Nusantara Hantaran, saya ingin konsultasi/pemesanan.",
+      `Nama: ${val("customerName")}`,
+      `Nomor kontak: ${val("customerPhone")}`,
+      `Jenis hantaran: ${val("eventType")}`,
+      `Tanggal acara: ${val("eventDate") || "-"}`,
+      `Detail pesanan: ${val("orderNotes") || "-"}`
+    ].join("\n");
+
+    window.open(waLink(message), "_blank");
+  });
+}
